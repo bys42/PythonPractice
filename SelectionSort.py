@@ -1,22 +1,19 @@
 import sys
 
-def ascending(a, b):
-    return b - a
+def ascending(): return min
+def descending(): return max
 
-def descending(a, b):
-    return a - b
-
-def selectionSort(xs, compare = ascending):
-    remain = xs
+def selectionSort(list, select = ascending()):
+    remain = list.copy()
     result = []
 
     while remain:
-        selected = reduce(lambda x, y: x if compare(x, y) > 0 else y, remain)
-        result += [selected]
-        remain = [elt for elt in remain if elt != selected]
+        selection = select(remain)
+        result.append(selection)
+        remain.remove(selection)
 
     return result
 
-inputNums = [int(input) for input in sys.argv if input.isdigit()]
-print "In ascending order:", selectionSort(inputNums)
-print "In descending order:", selectionSort(inputNums, descending)
+nums = [int(data) for data in sys.argv if data.isdigit()]
+print ("In ascending order:", selectionSort(nums))
+print ("In descending order:", selectionSort(nums, descending()))
